@@ -86,8 +86,8 @@ X_val = preprocess(val_inputs)
 # ---------------------------------------------------------------
 print("Training Random Forest...")
 model = RandomForestClassifier(
-    n_estimators=200,
-    max_depth=20,
+    n_estimators=300,
+    max_depth=25,
     random_state=RANDOM_STATE,
     n_jobs=-1,
 )
@@ -112,6 +112,15 @@ def evaluate(X, y, pos_label="Yes"):
 print("\nValidation metrics:")
 for k, v in evaluate(X_val, val_targets).items():
     print(f"  {k}: {v:.4f}")
+
+metrics = evaluate(X_val, val_targets)
+os.makedirs("output", exist_ok=True)
+results_path = os.path.join("output", "model_results.csv")
+row = pd.DataFrame([{
+    "experiment": f"n_estimators={model.n_estimators}, max_depth={model.max_depth}",
+    **metrics,
+}])
+row.to_csv(results_path, mode="a", header=not os.path.exists(results_path), index=False)    
 
 # ---------------------------------------------------------------
 # 6. Save model + preprocessors

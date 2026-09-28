@@ -1,0 +1,2 @@
+experiment,Accuracy,Precision,Recall,F1 Score,ROC AUC
+"n_estimators=200, max_depth=20",0.9998379817150793,1.0,0.9992703773191578,0.9996350555236954,0.999984851019029
